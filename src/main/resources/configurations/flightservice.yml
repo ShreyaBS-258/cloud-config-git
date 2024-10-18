@@ -1,0 +1,35 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8762/eureka/
+server:
+  port: 9098
+
+  spring:
+    datasource:
+      url: jdbc:h2:mem:testdb2
+      username: sa
+      password: password
+      driver-class-name: org.h2.Driver
+    h2:
+      console:
+        enabled: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+resilience4j.circuitbreaker:
+  instances:
+    flightService:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000
+      permittedNumberOfCallsInHalfOpenState: 3
